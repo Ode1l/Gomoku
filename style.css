@@ -1,0 +1,127 @@
+.gomoku-board {
+  position: relative;
+  display: flex;
+  width: 100%;
+  height: 100%;
+  min-height: 0;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-start;
+  gap: 0.5rem;
+}
+
+.gomoku-board__canvas {
+  display: block;
+  width: 100%;
+  max-width: min(100%, calc(100svh - 13rem), 45rem);
+  aspect-ratio: 1;
+  touch-action: none;
+  border: 1px solid rgba(48, 43, 35, 0.18);
+  border-radius: 1.35rem;
+  background: #d8b16d;
+  box-shadow: 0 18px 54px rgba(60, 47, 27, 0.2);
+}
+
+.gomoku-board__status {
+  padding: 0.375rem 0.75rem;
+  border: 1px solid var(--lock-border, rgba(28, 28, 26, 0.1));
+  border-radius: 999px;
+  background: rgba(255, 255, 252, 0.82);
+  color: var(--lock-muted, #666761);
+  font-size: 0.75rem;
+  font-weight: 600;
+  box-shadow: 0 1px 3px rgba(15, 15, 12, 0.08);
+  backdrop-filter: blur(8px);
+}
+
+.gomoku-board__winner {
+  pointer-events: none;
+  position: absolute;
+  inset: 0;
+  z-index: 20;
+  display: none;
+  align-items: center;
+  justify-content: center;
+  padding: 1rem;
+}
+
+.gomoku-board__winner.is-visible {
+  pointer-events: auto;
+  display: flex;
+}
+
+.gomoku-board__winner-card {
+  width: 100%;
+  max-width: 18rem;
+  padding: 1rem;
+  border: 1px solid rgba(20, 20, 18, 0.14);
+  border-radius: 1.4rem;
+  background: rgba(255, 255, 252, 0.94);
+  text-align: center;
+  box-shadow: 0 22px 70px rgba(20, 20, 18, 0.2);
+  backdrop-filter: blur(16px);
+}
+
+.gomoku-board__winner-label {
+  margin: 0;
+  color: var(--lock-dim, #9a9b94);
+  font-size: 0.68rem;
+  font-weight: 600;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+}
+
+.gomoku-board__winner-title {
+  margin: 0.5rem 0 0;
+  color: var(--lock-paper, #1f1f1d);
+  font-size: 1.5rem;
+  font-weight: 600;
+  letter-spacing: -0.04em;
+}
+
+.gomoku-board__winner-description {
+  margin: 0.25rem 0 0;
+  color: var(--lock-muted, #666761);
+  font-size: 0.875rem;
+  line-height: 1.25rem;
+}
+
+.gomoku-board__winner-button {
+  display: inline-flex;
+  width: 100%;
+  align-items: center;
+  justify-content: center;
+  margin-top: 1rem;
+  padding: 0.625rem 1rem;
+  border: 0;
+  border-radius: 999px;
+  background: var(--lock-paper, #1f1f1d);
+  color: white;
+  font: inherit;
+  font-size: 0.875rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: filter 160ms ease;
+}
+
+.gomoku-board__winner-button:hover {
+  filter: brightness(1.1);
+}
+
+@media (min-width: 640px) {
+  .gomoku-board {
+    gap: 0.75rem;
+    padding: 1rem;
+  }
+
+  .gomoku-board__canvas {
+    max-width: min(100%, 72svh, 45rem);
+    border-radius: 1.65rem;
+  }
+}
+
+@media (min-width: 1024px) {
+  .gomoku-board {
+    justify-content: center;
+  }
+}

@@ -1,0 +1,34 @@
+{
+  "name": "p2p-lockstep-kit-gomoku",
+  "version": "0.1.0",
+  "description": "Gomoku game package for p2p-lockstep-kit.",
+  "license": "GPL-3.0-only",
+  "type": "module",
+  "main": "./dist/index.js",
+  "files": [
+    "dist",
+    "README.md",
+    "style.css"
+  ],
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "import": "./dist/index.js"
+    },
+    "./style.css": "./style.css"
+  },
+  "types": "./dist/index.d.ts",
+  "scripts": {
+    "build": "tsc -p tsconfig.build.json",
+    "typecheck": "tsc -p tsconfig.json --noEmit",
+    "test": "vitest run"
+  },
+  "peerDependencies": {
+    "p2p-lockstep-kit-session": "^0.1.11"
+  },
+  "devDependencies": {
+    "p2p-lockstep-kit-session": "^0.1.11",
+    "typescript": "^5.9.3",
+    "vitest": "^4.1.2"
+  }
+}
