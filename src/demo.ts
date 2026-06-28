@@ -139,28 +139,48 @@ export const mountGomokuDemo = (options: {
 
 const stoneLabel = (stone: 1 | 2) => (stone === 1 ? "Black" : "White");
 
+const localStone = (snapshot: GomokuSessionSnapshot): 1 | 2 | null => {
+  if (snapshot.lastStart === "local") {
+    return 1;
+  }
+  if (snapshot.lastStart === "remote") {
+    return 2;
+  }
+  return null;
+};
+
+const withStone = (message: string, stone: 1 | 2 | null) =>
+  stone ? `${message} · You are ${stoneLabel(stone)}` : message;
+
 const getStatusText = (
   snapshot: GomokuSessionSnapshot,
   winner: "local" | "remote" | null,
   nextStone: 1 | 2,
 ) => {
+  const mine = localStone(snapshot);
   if (winner) {
-    return winner === "local" ? "You win" : "Peer wins";
+    return withStone(winner === "local" ? "You win" : "Peer wins", mine);
   }
   if (snapshot.pendingAction) {
-    return "Approval pending";
+    return withStone(`${snapshot.pendingAction} approval pending`, mine);
   }
   if (snapshot.localState === "syncing" || snapshot.remoteState === "syncing") {
-    return "Syncing board";
+    return withStone("Syncing board", mine);
   }
   if (!snapshot.connected) {
-    return "Waiting for peer";
+    return withStone(mine ? "Peer offline" : "Waiting for peer", mine);
   }
   if (snapshot.localState === "turn") {
-    return `Your turn - ${stoneLabel(nextStone)}`;
+    return withStone(`Your turn · ${stoneLabel(nextStone)} to move`, mine);
   }
   if (snapshot.localState === "remote_turn") {
-    return `Peer turn - ${stoneLabel(nextStone)}`;
+    return withStone(`Peer turn · ${stoneLabel(nextStone)} to move`, mine);
   }
-  return "Ready when both players start";
+  if (snapshot.localState === "could_start") {
+    return "Both ready · You can start";
+  }
+  if (snapshot.localState === "ready") {
+    return "You are ready · Waiting for peer";
+  }
+  return "Connect, ready up, then start";
 };

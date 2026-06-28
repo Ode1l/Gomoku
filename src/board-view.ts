@@ -123,11 +123,30 @@ export class GomokuBoardView {
 
   #drawBoardSurface() {
     const gradient = this.#ctx.createLinearGradient(0, 0, this.#size, this.#size);
-    gradient.addColorStop(0, "#f1d59a");
-    gradient.addColorStop(0.52, "#d8b16d");
-    gradient.addColorStop(1, "#b98543");
+    gradient.addColorStop(0, "#e0ad64");
+    gradient.addColorStop(0.52, "#c78d45");
+    gradient.addColorStop(1, "#9f652d");
     this.#ctx.fillStyle = gradient;
     this.#ctx.fillRect(0, 0, this.#size, this.#size);
+
+    this.#ctx.save();
+    this.#ctx.globalAlpha = 0.1;
+    for (let x = 12; x < this.#size; x += 22) {
+      this.#ctx.beginPath();
+      this.#ctx.moveTo(x, 0);
+      this.#ctx.bezierCurveTo(
+        x + 7,
+        this.#size * 0.28,
+        x - 6,
+        this.#size * 0.72,
+        x + 3,
+        this.#size,
+      );
+      this.#ctx.strokeStyle = x % 44 === 12 ? "#fff0ca" : "#6f3f1d";
+      this.#ctx.lineWidth = 1;
+      this.#ctx.stroke();
+    }
+    this.#ctx.restore();
   }
 
   #drawGrid() {

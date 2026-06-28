@@ -1,34 +1,47 @@
-# P2P Lockstep Gomoku
+# P2P Gomoku
 
-Gomoku package for `p2p-lockstep-kit-ui`.
-
-It provides the Gomoku rules plugin, board view, and a small mount helper for
-`<p2p-lockstep-app>`.
-
-## Usage
-
-```ts
-import "p2p-lockstep-kit-ui";
-import "p2p-lockstep-kit-ui/style.css";
-import "p2p-lockstep-kit-gomoku/style.css";
-import { mountGomokuDemo } from "p2p-lockstep-kit-gomoku";
-
-await customElements.whenDefined("p2p-lockstep-app");
-
-const app = document.querySelector("p2p-lockstep-app");
-const mount = app?.getBoardHost();
-const runtime = app?.getRuntime();
-
-if (mount && runtime) {
-  mountGomokuDemo({ mount, runtime });
-}
-```
+A browser-based peer-to-peer Gomoku application built with Vite and
+`p2p-lockstep-kit-ui`.
 
 ## Development
 
 ```bash
 pnpm install
+pnpm dev
+```
+
+## Validation
+
+```bash
 pnpm typecheck
 pnpm test
 pnpm build
 ```
+
+## Cloudflare Workers
+
+The production site is emitted to `dist/` and configured as a Workers Static
+Assets application in `wrangler.jsonc`.
+
+```jsonc
+{
+  "$schema": "./node_modules/wrangler/config-schema.json",
+  "name": "p2p-lockstep-gomoku",
+  "compatibility_date": "2026-06-28",
+  "assets": {
+    "directory": "./dist",
+    "not_found_handling": "single-page-application"
+  }
+}
+```
+
+Authenticate once, then deploy the application:
+
+```bash
+pnpm exec wrangler login
+pnpm deploy
+```
+
+Cloudflare serves `dist/index.html` and the hashed Vite assets directly. No
+Worker entry file, npm package publish step, or Pages-specific output directory
+is required.
