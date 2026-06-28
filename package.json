@@ -14,10 +14,10 @@
     "test": "vitest run"
   },
   "dependencies": {
-    "p2p-lockstep-kit-ui": "^0.1.0"
+    "p2p-lockstep-kit-ui": "^0.1.2"
   },
   "devDependencies": {
-    "p2p-lockstep-kit-session": "^0.1.11",
+    "p2p-lockstep-kit-session": "^0.1.12",
     "typescript": "^5.9.3",
     "vite": "^8.1.0",
     "vitest": "^4.1.2",
