@@ -18,30 +18,20 @@ pnpm test
 pnpm build
 ```
 
-## Cloudflare Workers
+## Static Deployment
 
-The production site is emitted to `dist/` and configured as a Workers Static
-Assets application in `wrangler.jsonc`.
-
-```jsonc
-{
-  "$schema": "./node_modules/wrangler/config-schema.json",
-  "name": "p2p-lockstep-gomoku",
-  "compatibility_date": "2026-06-28",
-  "assets": {
-    "directory": "./dist",
-    "not_found_handling": "single-page-application"
-  }
-}
-```
-
-Authenticate once, then deploy the application:
+Build the application with Vite:
 
 ```bash
-pnpm exec wrangler login
-pnpm deploy
+pnpm build
 ```
 
-Cloudflare serves `dist/index.html` and the hashed Vite assets directly. No
-Worker entry file, npm package publish step, or Pages-specific output directory
-is required.
+The deployable static site is written to `dist/`. It can be served by any static
+host without a Worker runtime.
+
+For Cloudflare Pages, use:
+
+```text
+Build command: pnpm build
+Build output directory: dist
+```

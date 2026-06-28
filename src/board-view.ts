@@ -30,12 +30,16 @@ export class GomokuBoardView {
     this.#ctx = ctx;
     this.#canvas.width = this.#size;
     this.#canvas.height = this.#size;
-    this.#canvas.className = "gomoku-board__canvas";
+    this.#canvas.className =
+      "block aspect-square w-full max-w-[min(100%,calc(100svh-13rem),45rem)] touch-none rounded-[1.35rem] border border-[rgba(245,208,151,0.36)] bg-[#d8b16d] shadow-[0_26px_80px_rgba(0,0,0,0.48),0_0_48px_rgba(183,117,47,0.1),inset_0_1px_0_rgba(255,255,255,0.32)] sm:max-w-[min(100%,72svh,45rem)] sm:rounded-[1.65rem]";
     this.#canvas.setAttribute("aria-label", "Gomoku board");
 
-    this.element.className = "gomoku-board";
-    this.#status.className = "gomoku-board__status";
-    this.#winnerNotice.className = "gomoku-board__winner";
+    this.element.className =
+      "relative flex h-full min-h-0 w-full flex-col items-center justify-start gap-2 sm:gap-3 sm:p-4 lg:justify-center";
+    this.#status.className =
+      "shrink-0 rounded-full border border-[var(--lock-border)] bg-[var(--lock-surface-strong)] px-3 py-1.5 text-xs font-semibold text-[var(--lock-muted)] shadow-[0_8px_20px_rgba(0,0,0,0.24)] backdrop-blur";
+    this.#winnerNotice.className =
+      "pointer-events-none absolute inset-0 z-20 hidden items-center justify-center p-4";
     this.element.append(this.#canvas, this.#status, this.#winnerNotice);
 
     this.#bindEvents();
@@ -248,21 +252,23 @@ export class GomokuBoardView {
     notice: { title: string; description: string } | null,
   ) {
     if (!notice) {
-      this.#winnerNotice.classList.remove("is-visible");
+      this.#winnerNotice.classList.remove("flex", "pointer-events-auto");
+      this.#winnerNotice.classList.add("hidden", "pointer-events-none");
       this.#winnerNotice.replaceChildren();
       return;
     }
 
-    this.#winnerNotice.classList.add("is-visible");
+    this.#winnerNotice.classList.remove("hidden", "pointer-events-none");
+    this.#winnerNotice.classList.add("flex", "pointer-events-auto");
     this.#winnerNotice.innerHTML = `
-      <div class="gomoku-board__winner-card">
-        <p class="gomoku-board__winner-label">Game over</p>
-        <p class="gomoku-board__winner-title">${notice.title}</p>
-        <p class="gomoku-board__winner-description">${notice.description}</p>
+      <div class="w-full max-w-72 rounded-[1.4rem] border border-[var(--lock-border-strong)] bg-[var(--lock-surface-strong)] p-4 text-center shadow-[0_22px_70px_rgba(0,0,0,0.52)] backdrop-blur-xl">
+        <p class="m-0 text-[0.68rem] font-semibold uppercase tracking-[0.22em] text-[var(--lock-dim)]">Game over</p>
+        <p class="mt-2 mb-0 text-2xl font-semibold tracking-[-0.04em] text-[var(--lock-paper)]">${notice.title}</p>
+        <p class="mt-1 mb-0 text-sm leading-5 text-[var(--lock-muted)]">${notice.description}</p>
         <button
           type="button"
           data-dismiss-winner
-          class="gomoku-board__winner-button"
+          class="mt-4 inline-flex w-full cursor-pointer items-center justify-center rounded-full border-0 bg-[var(--lock-primary-bg)] px-4 py-2.5 text-sm font-semibold text-[var(--lock-primary-text)] transition-[filter] duration-150 hover:brightness-110"
         >
           View board
         </button>

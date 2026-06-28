@@ -1,6 +1,6 @@
+import "../style.css";
 import "p2p-lockstep-kit-ui";
 import "p2p-lockstep-kit-ui/style.css";
-import "../style.css";
 import type { P2PLockstepAppElement } from "p2p-lockstep-kit-ui";
 import { mountGomokuDemo } from "./demo.js";
 
