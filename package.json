@@ -13,7 +13,7 @@
     "test": "vitest run"
   },
   "dependencies": {
-    "p2p-lockstep-kit-ui": "^0.1.2"
+    "p2p-lockstep-kit-ui": "^0.1.4"
   },
   "devDependencies": {
     "@tailwindcss/vite": "^4.3.1",
